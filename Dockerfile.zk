@@ -4,12 +4,16 @@ ENV DEBIAN_FRONTEND=noninteractive
 ARG BUILD_FLAGS=""
 
 RUN apt-get update && \
+    apt-get install -y gpg wget && \
     apt-get install -y \
+    debian-archive-keyring \
+    binfmt-support \
+    qemu-user-static \
     build-essential \
     cracklib-runtime \
     jq \
-    clang \
-    sudo && \
+    clang &&\
+    update-binfmts --enable qemu-x86_64 && \
     apt-get clean && \
     rm -rf /var/lib/apt/lists/*
 
